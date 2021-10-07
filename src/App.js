@@ -9,7 +9,19 @@ import './App.css';
 // words typed = (characters - typos) / 5
 
 const secondsToCount = 10;
-const paragraph = `Coding is the best. We are able to build something from scratch. It is literally imagination incarnate. Solving our own problems through coding is one of the coolest things we could do!`;
+const paragraph = [
+  'Coding is the best. We are able to build something from scratch. It is literally imagination incarnate. Solving our own problems through coding is one of the coolest things we could do!',
+  'JavaScript is a scripting or programming language that allows you to implement complex features on web pages — every time a web page does more than just sit there and display static information for you to look at — displaying timely content updates, interactive maps, animated 2D/3D graphics, scrolling video jukeboxes, etc. — you can bet that JavaScript is probably involved.',
+  'Peter Piper picked a peck of pickled peppers. A peck of pickled peppers Peter Piper picked. If Peter Piper picked a peck of pickled peppers. Where’s the peck of pickled peppers Peter Piper picked?',
+];
+
+let number = undefined;
+
+function randomNum() {
+  return Math.floor(Math.random() * paragraph.length);
+}
+
+number = randomNum();
 
 function findTypos(str1, str2) {
   let typos = [];
@@ -25,7 +37,7 @@ export default function App() {
   const [typoIndexes, setTypoIndexes] = useState([]);
 
   useEffect(() => {
-    setTypoIndexes(findTypos(paragraph, typedText));
+    setTypoIndexes(findTypos(paragraph[number], typedText));
   }, [typedText]);
 
   useEffect(() => {
@@ -50,6 +62,7 @@ export default function App() {
   function resetTimer() {
     setTypedText('');
     reset();
+    number = randomNum();
   }
 
   return (
@@ -68,7 +81,7 @@ export default function App() {
       <div className="content">
         {/* show the paragraph */}
         <p>
-          {paragraph.split('').map((character, index) => {
+          {paragraph[number].split('').map((character, index) => {
             let characterClass = '';
             const hasBeenTyped = typedText.length > index;
             if (hasBeenTyped) {
